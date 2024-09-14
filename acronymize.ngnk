@@ -1,0 +1,5 @@
+{x@&(x>64)&x<91}
+/ Index into x at "where >64 <91"
+
+{(x>64)&x<91}#"Hello World"
+/ Filter

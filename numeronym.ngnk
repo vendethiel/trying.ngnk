@@ -1,0 +1,2 @@
+{$[(#x)<4;x;,/(*x;$(#x)-2;*|x)]}
+/ If length < 4 (ngn/k has no lte/gte), take first/length-2/last, and join
