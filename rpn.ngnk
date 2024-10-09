@@ -1,0 +1,14 @@
+isdigit:{&[x>"0"-1;x<"9"+1]}
+
+/ rawg:(&1&(~=)\parse@s)_s
+parse:{(1+!#0^" +-*/"?x)|10*isdigit x}
+split:{_[&~~':parse@x;x]}
+strip:{^[x^\:" ";,""]}
+op:{{,[-2_y;x.-2#y]}[x]}
+ops:`"+"`"-"`"*"`"/"!(op[+'];op[-'];op[*'];op[/'])
+eval1:{$[&/isdigit@y;x,`I$y;ops[`$y]@x]}
+eval:{()eval1/x} / swap / to \ to see the process
+run:{eval@strip@split x}
+
+/ Test case:
+/    run "10 2+ 20 +"
