@@ -1,6 +1,5 @@
 isdigit:{&[x>"0"-1;x<"9"+1]}
 
-/ rawg:(&1&(~=)\parse@s)_s
 parse:{(1+!#0^" +-*/"?x)|10*isdigit x}
 split:{_[&~~':parse@x;x]}
 strip:{^[x^\:" ";,""]}
