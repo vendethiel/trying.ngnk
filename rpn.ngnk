@@ -4,8 +4,8 @@ parse:{(1+!#0^" +-*/"?x)|10*isdigit x}
 split:{_[&~~':parse@x;x]}
 strip:{^[x^\:" ";,""]}
 op:{{,[-2_y;x.-2#y]}[x]}
-ops:`"+"`"-"`"*"`"/"!(op[+'];op[-'];op[*'];op[/'])
-eval1:{$[&/isdigit@y;x,`I$y;ops[`$y]@x]}
+ops:"+-*/"!(op[+'];op[-'];op[*'];op[/'])
+eval1:{$[&/isdigit@y;x,`I$y;ops[*y]@x]}
 eval:()eval1/ / swap / to \ to see the process
 run:{eval@strip@split x}
 
