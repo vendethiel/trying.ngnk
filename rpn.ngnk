@@ -6,7 +6,7 @@ strip:{^[x^\:" ";,""]}
 op:{{,[-2_y;x.-2#y]}[x]}
 ops:`"+"`"-"`"*"`"/"!(op[+'];op[-'];op[*'];op[/'])
 eval1:{$[&/isdigit@y;x,`I$y;ops[`$y]@x]}
-eval:{()eval1/x} / swap / to \ to see the process
+eval:()eval1/ / swap / to \ to see the process
 run:{eval@strip@split x}
 
 / Test case:
