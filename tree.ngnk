@@ -1,0 +1,14 @@
+addat:{(y#x),z,(y_x)} / addat[v;idx;new]
+
+v:(,"0";"0.1";"0.1.1";"0.2";,"1";"1.1";"1.1.1";"1.1.1.1";"1.2")
+/ da:0   1     2       1    0    1    2       3          1
+d:{+/"."=x}'v
+under:{1+y+&&\(x@y)<1_y_x}
+underi:{y,under[x;y]} / under inclusive
+underv:{under[x;*y?z]} / under from value
+undervi:{underi[x;*y?z]} / under from value, inclusive
+lastof:{*|underi[x;y]} / last index *under* that key
+addunder:{i:1+lastof[x;y];addafter[x;i;1+x@y],l} / add, return (new depth vector;new index)
+v@under[d;0]
+v@underv[d;v;,"1.1.1"]
+v@undervi[d;v;,"1.1.1"]
