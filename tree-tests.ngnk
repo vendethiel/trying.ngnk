@@ -1,0 +1,23 @@
+/ Small TAP helper
+tapi:0
+plan:{`0:"1..",$x}
+next:{[];tapi::1+tapi;$tapi}
+ok:{i:next[];`0:"ok ",i," - ",x}
+fail:{i:next[];`0:"not ok ",i," - ",x}
+check:{$[z;ok x;fail y]}
+eq:{
+  $[~[@y;@z]
+    check[x;x," expected ",($y)," to match ",$z;y~z]
+    fail[x," expected types to match but got ",($@y)," and ",$@z]
+  ]
+}
+
+\l tree.ngnk
+
+v:(,"0";"0.1";"0.1.1";"0.2";,"1";"1.1";"1.1.1";"1.1.1.1";"1.2")
+/ da:0   1     2       1    0    1    2       3          1
+d:{+/"."=x}'v
+plan 2
+eq["Under idx 0";("0.1";"0.1.1";"0.2")] v@under[d;0]
+eq["Under 1.1.1";,"1.1.1.1"] v@underv[d;v;,"1.1.1"]
+/ v@undervi[d;v;,"1.1.1"]
