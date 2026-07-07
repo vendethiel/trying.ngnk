@@ -1,38 +1,28 @@
-/ Small TAP helper
-tapi:0
-succeed:1
-prefix:""
-next:{[];tapi::1+tapi;$tapi}
-print:{`0:prefix,x}
-plan:{print"1..",$x}
-subtest:{
-  pre:prefix;os:succeed;ot:tapi
-  print"# Subtest: ",x
-  succeed::1;tapi::0;prefix::"    ",pre
-  z[]
-  plan y
-  prefix::pre;tapi::ot
-  check[x;x;succeed]
-  succeed::succeed|os
-}
-ok:{i:next[];print"ok ",i," - ",x}
-fail:{i:next[];succeed::0;print"not ok ",i," - ",x}
-check:{$[z;ok x;fail y]}
-eq:{
-  $[~[@y;@z]
-    check[x;x," expected ",($y)," to match ",$z;y~z]
-    fail[x," expected types to match but got ",($@y)," and ",$@z]
-  ]
-}
-
+\d tap
+\l tap.ngnk
+\d .
 \l tree.ngnk
 
 v:(,"0";"0.1";"0.1.1";"0.2";,"1";"1.1";"1.1.1";"1.1.1.1";"1.2")
 / da:0   1     2       1    0    1    2       3          1
 d:{+/"."=x}'v
-subtest["under";2]{
-  eq["Under idx 0";("0.1";"0.1.1";"0.2")] v@under[d;0]
-  eq["Under 1.1.1";,"1.1.1.1"] v@underv[d;v;,"1.1.1"]
+tap.plan 4
+tap.subtest["under{,v}";2]{
+  tap.eq["Under idx 0";("0.1";"0.1.1";"0.2")] v@under[d;0]
+  tap.eq["Under 1.1.1";,"1.1.1.1"] v@underv[d;v;,"1.1.1"]
 }
-plan 1
-/ v@undervi[d;v;,"1.1.1"]
+tap.subtest["underi{,v}";2]{
+  tap.eq["Under idx 0";(,"0";"0.1";"0.1.1";"0.2")] v@underi[d;0]
+  tap.eq["Under 1.1.1";("1.1.1";"1.1.1.1")] v@underiv[d;v;,"1.1.1"]
+}
+tap.subtest["lastof";2]{
+  tap.eq["Last under 0";3] lastof[d;0]
+  tap.eq["Last under leaf";3] lastof[d;3]
+}
+tap.subtest["addunder";1]{
+  tap.subtest["addunder 0";2]{
+    (d2;i):addunder[d;0]
+    tap.eq["Added after last";1+lastof[d;0]] i
+    tap.eq["Depth is 1 more";1+*d] d2@i
+  }
+}

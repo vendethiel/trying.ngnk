@@ -3,6 +3,6 @@ addat:{(y#x),z,(y_x)} / addat[v;idx;new]
 under:{1+y+&&\(x@y)<1_y_x} / under[depths;idx] - under
 underi:{y,under[x;y]} / under[d;idx] - under inclusive
 underv:{under[x;*y?z]} / underv[d;values;value] - under include from value
-undervi:{underi[x;*y?z]} / undervi[d;vs;v] - under from value, inclusive
+underiv:{underi[x;*y?z]} / undervi[d;vs;v] - under from value, inclusive
 lastof:{*|underi[x;y]} / lastof[d;idx] last index *under* that key
-addunder:{i:1+lastof[x;y];addafter[x;i;1+x@y],l} / add, return (new depth vector;new index)
+addunder:{i:1+lastof[x;y]; (addat[x;i;1+x@y];i)} / addunder[d;i] add, return (new depth vector;new index)

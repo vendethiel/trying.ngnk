@@ -1,0 +1,26 @@
+/ Small TAP helper
+tapi:0
+succeed:1
+prefix:""
+next:{[];tapi::1+tapi;$tapi}
+print:{`0:prefix,x}
+plan:{print"1..",$x}
+subtest:{
+  print"# Subtest: ",x
+  pre:prefix;os:succeed;ot:tapi
+  succeed::1;tapi::0;prefix::"    ",pre
+  plan y
+  z[]
+  prefix::pre;tapi::ot
+  check[x;x;succeed]
+  succeed::succeed|os
+}
+ok:{i:next[];print"ok ",i," - ",x}
+fail:{i:next[];succeed::0;print"not ok ",i," - ",x}
+check:{$[z;ok x;fail y]}
+eq:{
+  $[~[@y;@z]
+    check[x;x," expected ",($y)," to match ",$z;y~z]
+    fail[x," expected types to match but got ",($@y)," and ",$@z]
+  ]
+}
